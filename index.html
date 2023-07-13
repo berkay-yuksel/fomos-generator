@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FOMOS GENERATOR</title>
+  <style>
+    body{
+      text-align: center;
+      
+    }
+    .preview {
+      width: 750px;
+      height: 750px;
+      border: 1px solid #000;
+      display: inline-flex;
+    
+    }
+  
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 47px;
+  height: 19px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+    width: 15px;
+    left: 3px;
+    bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+    
+  </style>
+</head>
+<body>
+  <br /><br /><br /><br />
+  <h1>FOMOS GENERATOR</h1>
+  <br /><br />
+  <h2>Select Properties:</h2>
+  <button id="randomButton">Randomly Select</button>
+  <button id="downloadButton">Download Avatar</button>
+<span> <b>AUTO MODE</b>
+  <label class="switch"  for="autoRandomSwitch">
+    
+    <input type="checkbox" id="autoRandomSwitch">
+    <span class="slider round"></span>
+  </label>
+</span>
+
+
+  <br /><br />
+  
+  <label for="background">Background:</label>
+  <select id="background">
+    <option value="background1.png">Background 1</option>
+    <option value="background2.png">Background 2</option>
+    <option value="background3.png">Background 3</option>
+  </select>
+
+  <label for="skin">Skin:</label>
+  <select id="skin">
+    <option value="skin1.png">Skin 1</option>
+    <option value="skin2.png">Skin 2</option>
+  </select>
+
+  <label for="eyes">Eyes:</label>
+  <select id="eyes">
+    <option value="eyes1.png">Eyes 1</option>
+    <option value="eyes2.png">Eyes 2</option>
+    <option value="eyes3.png">Eyes 3</option>
+  </select>
+
+  <label for="mouth">Mouth:</label>
+  <select id="mouth">
+    <option value="mouth1.png">Mouth 1</option>
+    <option value="mouth2.png">Mouth 2</option>
+    <option value="mouth3.png">Mouth 3</option>
+  </select>
+
+  <label for="tattoo">Tattoo:</label>
+  <select id="tattoo">
+    <option value="tattoo1.png">Tattoo 1</option>
+    <option value="tattoo2.png">Tattoo 2</option>
+  </select>
+
+  <label for="clothes">Clothes:</label>
+  <select id="clothes">
+    <option value="clothes1.png">Clothes 1</option>
+    <option value="clothes2.png">Clothes 2</option>
+    <option value="clothes3.png">Clothes 3</option>
+  </select>
+
+  <label for="hair">Hair:</label>
+  <select id="hair">
+    <option value="hair1.png">Hair 1</option>
+    <option value="hair2.png">Hair 2</option>
+    <option value="hair3.png">Hair 3</option>
+  </select>
+
+  <h2>Avatar Preview:</h2>
+  <div class="preview">
+    <canvas id="avatarCanvas" width="1500" height="1500"></canvas>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+  <script>
+    // Get the canvas element and its context
+    const canvas = document.getElementById('avatarCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Image variables
+    let backgroundImg, skinImg, eyesImg, mouthImg, tattooImg, clothesImg, hairImg;
+
+    // Function to draw the avatar on the canvas
+    function drawAvatar() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the background image
+      if (backgroundImg) {
+        ctx.drawImage(backgroundImg, 0, 0);
+      }
+
+      // Draw the skin image
+      if (skinImg) {
+        ctx.drawImage(skinImg, 0, 0);
+      }
+
+      // Draw the mouth image
+      if (mouthImg) {
+        ctx.drawImage(mouthImg, 0, 0);
+      }
+
+      // Draw the tattoo image
+      if (tattooImg) {
+        ctx.drawImage(tattooImg, 0, 0);
+      }
+
+      // Draw the clothes image
+      if (clothesImg) {
+        ctx.drawImage(clothesImg, 0, 0);
+      }
+
+      // Draw the hair image
+      if (hairImg) {
+        ctx.drawImage(hairImg, 0, 0);
+      }
+
+      // Draw the eyes image
+      if (eyesImg) {
+        ctx.drawImage(eyesImg, 0, 0);
+      }
+    }
+
+    // Event listeners for when the user selects an option
+    document.getElementById('background').addEventListener('change', function (event) {
+      const fileName = event.target.value;
+      if (fileName) {
+        backgroundImg = new Image();
+        backgroundImg.onload = function () {
+          drawAvatar();
+        };
+        backgroundImg.src = fileName;
+      }
+    });
+
+    document.getElementById('skin').addEventListener('change', function (event) {
+      const fileName = event.target.value;
+      if (fileName) {
+        skinImg = new Image();
+        skinImg.onload = function () {
+          drawAvatar();
+        };
+        skinImg.src = fileName;
+      }
+    });
+
+    document.getElementById('eyes').addEventListener('change', function (event) {
+      const fileName = event.target.value;
+      if (fileName) {
+        eyesImg = new Image();
+        eyesImg.onload = function () {
+          drawAvatar();
+        };
+        eyesImg.src = fileName;
+      }
+    });
+
+    document.getElementById('mouth').addEventListener('change', function (event) {
+      const fileName = event.target.value;
+      if (fileName) {
+        mouthImg = new Image();
+        mouthImg.onload = function () {
+          drawAvatar();
+        };
+        mouthImg.src = fileName;
+      }
+    });
+
+    document.getElementById('tattoo').addEventListener('change', function (event) {
+      const fileName = event.target.value;
+      if (fileName) {
+        tattooImg = new Image();
+        tattooImg.onload = function () {
+          drawAvatar();
+        };
+        tattooImg.src = fileName;
+      }
+    });
+
+    document.getElementById('clothes').addEventListener('change', function (event) {
+      const fileName = event.target.value;
+      if (fileName) {
+        clothesImg = new Image();
+        clothesImg.onload = function () {
+          drawAvatar();
+        };
+        clothesImg.src = fileName;
+      }
+    });
+
+    document.getElementById('hair').addEventListener('change', function (event) {
+      const fileName = event.target.value;
+      if (fileName) {
+        hairImg = new Image();
+        hairImg.onload = function () {
+          drawAvatar();
+        };
+        hairImg.src = fileName;
+      }
+    });
+
+    // Function to load an image
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = reject;
+        image.src = src;
+      });
+    }
+
+    // Function to randomly select an option from a select element and load the corresponding image
+    async function randomlySelect(selectElement) {
+      const options = selectElement.options;
+      const randomIndex = Math.floor(Math.random() * options.length);
+      selectElement.selectedIndex = randomIndex;
+
+      const selectedOption = options[randomIndex];
+      const src = selectedOption.value;
+      const image = await loadImage(src);
+      return image;
+    }
+
+    // Event listener for the "Randomly Select" button
+    document.getElementById('randomButton').addEventListener('click', async function () {
+      backgroundImg = await randomlySelect(document.getElementById('background'));
+      skinImg = await randomlySelect(document.getElementById('skin'));
+      eyesImg = await randomlySelect(document.getElementById('eyes'));
+      mouthImg = await randomlySelect(document.getElementById('mouth'));
+      tattooImg = await randomlySelect(document.getElementById('tattoo'));
+      clothesImg = await randomlySelect(document.getElementById('clothes'));
+      hairImg = await randomlySelect(document.getElementById('hair'));
+
+      drawAvatar();
+    });
+
+    // Event listener for the "Auto Random Select" switch
+    let autoRandomInterval;
+    const autoRandomSwitch = document.getElementById('autoRandomSwitch');
+    autoRandomSwitch.addEventListener('change', function () {
+      if (autoRandomSwitch.checked) {
+        autoRandomInterval = setInterval(async function () {
+          await randomButton.click();
+        }, 750); 
+      } else {
+        clearInterval(autoRandomInterval);
+        autoRandomInterval = null;
+      }
+    });
+
+    // Event listener for the "Download Avatar" button
+    document.getElementById('downloadButton').addEventListener('click', function () {
+      const fullSizeCanvas = document.createElement('canvas');
+      const fullSizeCtx = fullSizeCanvas.getContext('2d');
+      fullSizeCanvas.width = canvas.width;
+      fullSizeCanvas.height = canvas.height;
+      fullSizeCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
+
+      fullSizeCanvas.toBlob(function(blob) {
+        window.saveAs(blob, 'avatar.png'); // Prompt the user to select the save location
+      });
+    });
+  </script>
+</body>
+</html>
